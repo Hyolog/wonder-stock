@@ -4,9 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WonderStock"
+        xmlns:control="clr-namespace:WonderStock.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="300" Width="400">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Image Width="30" Height="30" Margin="5" Source="Resources/Add.png"/>
+            <Image Width="30" Height="30" Margin="5" Source="Resources/Setting.png"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+            <control:StockTextBox/>
+            <control:StockTextBox/>
+            <control:StockTextBox/>
+        </StackPanel>
     </Grid>
 </Window>
