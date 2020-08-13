@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WonderStock"
         xmlns:control="clr-namespace:WonderStock.Controls"
+        xmlns:vm="clr-namespace:WonderStock.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="400">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -14,14 +19,16 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Image Width="30" Height="30" Margin="5" Source="Resources/Add.png"/>
-            <Image Width="30" Height="30" Margin="5" Source="Resources/Setting.png"/>
+            <Button Width="40" Height="40" Command="{Binding AddCommand}"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1">
-            <control:StockTextBox/>
-            <control:StockTextBox/>
-            <control:StockTextBox/>
-        </StackPanel>
+        <ListView x:Name="StocksListView" Grid.Row="1" ItemsSource="{Binding Stocks}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Price" Width="50" DisplayMemberBinding="{Binding Price}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
