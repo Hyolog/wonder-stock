@@ -25,8 +25,11 @@
         <ListView x:Name="StocksListView" Grid.Row="1" ItemsSource="{Binding Stocks}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Price" Width="50" DisplayMemberBinding="{Binding Price}"/>
+                    <GridViewColumn Header="종목명" Width="100" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="현재가" Width="50" DisplayMemberBinding="{Binding Price}"/>
+                    <GridViewColumn Header="전일대비" Width="50" DisplayMemberBinding="{Binding AmountOfChange}"/>
+                    <GridViewColumn Header="거래량" Width="50" DisplayMemberBinding="{Binding Volume}"/>
+                    <GridViewColumn Header="등락율" Width="50" DisplayMemberBinding="{Binding FluctuationRate}"/>
                 </GridView>
             </ListView.View>
         </ListView>

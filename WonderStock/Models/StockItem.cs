@@ -4,7 +4,9 @@
     {
         public string Name { get; set; }
         public int Code { get; set; }
-        public int Price { get; set; }
-        public int AmountOfChange { get; set; }
+        public string Price { get; set; }
+        public string AmountOfChange { get; set; }
+        public string Volume { get; set; }
+        public string FluctuationRate { get; set; }
     }
 }
