@@ -8,19 +8,29 @@
         public int PreviousPrice { get; set; }
         public int Volume { get; set; }
 
+        private int amountOfChange;
         public int AmountOfChange
         {
             get
             {
                 return Price - PreviousPrice;
             }
+            set
+            {
+                amountOfChange = value;
+            }
         }
 
+        private double fluctuationRate;
         public double FluctuationRate
         {
             get
             {
                 return AmountOfChange / Price;
+            }
+            set
+            {
+                fluctuationRate = value;
             }
         }
     }

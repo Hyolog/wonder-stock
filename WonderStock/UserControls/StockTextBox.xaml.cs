@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace WonderStock.Controls
+namespace WonderStock.UserControls
 {
     public partial class StockTextBox : UserControl
     {
