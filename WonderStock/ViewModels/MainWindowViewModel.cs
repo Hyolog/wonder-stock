@@ -1,4 +1,5 @@
-﻿using mvvm_netstandard.ComponentModel;
+﻿using HtmlAgilityPack;
+using mvvm_netstandard.ComponentModel;
 using mvvm_netstandard.Windows.Input;
 using NLog;
 using System;
@@ -39,6 +40,24 @@ namespace WonderStock.ViewModels
             {
                 SetValueWithNotify(ref searchResult, value);
             }
+        }
+
+        private Dictionary<string, string> codeAndNamePairs;
+
+        public Dictionary<string, string> CodeAndNamePairs
+        {
+            get
+            {
+                if (codeAndNamePairs == null)
+                {
+                    var htmlString = GetString("http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13");
+
+                    codeAndNamePairs = GetDictionaryFromHtmlString(htmlString);
+                }
+
+                return codeAndNamePairs;
+            }
+            set { codeAndNamePairs = value; }
         }
 
         public ICommand SearchCommand { get; set; }
@@ -84,7 +103,7 @@ namespace WonderStock.ViewModels
         {
             string searchText = obj as string;
 
-            var codes = GetCodeAndNameDic().Where(d => d.Value.Contains(searchText)).Select(d => d.Key);
+            var codes = CodeAndNamePairs.Where(d => d.Value.Contains(searchText)).Select(d => d.Key);
             
             foreach (var code in codes)
             {
@@ -93,19 +112,35 @@ namespace WonderStock.ViewModels
             }
         }
 
-        private Dictionary<string, string> GetCodeAndNameDic()
+        private string GetString(string url)
         {
-            // Mock
-            var result = new Dictionary<string, string>();
-            result.Add("035720", "카카오");
-            result.Add("035420", "NAVER");
-            result.Add("006400", "삼성SDI");
-            result.Add("009150", "삼성전기");
+            using (var client = new HttpClient())
+            {
+                return client.GetStringAsync(url).Result;
+            }
+        }
 
-            // TODO: excel 읽어서 가져오도록 구현
-            //http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13
+        // TODO: 코드리펙토링
+        private Dictionary<string, string> GetDictionaryFromHtmlString(string htmlString)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(htmlString);
 
-            return result;
+            var result = doc.DocumentNode.SelectNodes("//table")
+                .Descendants("tr")
+                .Skip(1)
+                .Where(tr => tr.Elements("td").Count() > 1)
+                .Select(tr => tr.Elements("td").Select(td => td.InnerText.Trim()).Take(2).ToList())
+                .ToList();
+
+            var codeAndNameDic = new Dictionary<string, string>();
+
+            foreach (var item in result)
+            {
+                codeAndNameDic.Add(item[1], item[0]);
+            }
+
+            return codeAndNameDic;
         }
 
         private StockItem GetStock(string code)
