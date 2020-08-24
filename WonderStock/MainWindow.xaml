@@ -4,10 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WonderStock"
-        xmlns:control="clr-namespace:WonderStock.Controls"
+        xmlns:control="clr-namespace:WonderStock.UserControls"
         xmlns:vm="clr-namespace:WonderStock.ViewModels"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="400">
+        Title="WonderStock"
+        Width="300" MinWidth="150" Height="Auto" MinHeight="70">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -16,32 +19,24 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <TextBox x:Name="SearchTextBox" Text="종목 검색" Height="30" />
-            <Button Width="30" Height="30" Command="{Binding SearchCommand}" CommandParameter="{Binding Text, ElementName=SearchTextBox}"/>
-        </StackPanel>
+        <ui:CommandBar Grid.Row="0" HorizontalAlignment="Left" Background="Black">
+            <ui:AppBarButton Label="검색" Command="{Binding SearchCommand}"/>
+            <ui:AppBarButton Label="설정" Command="{Binding SettingCommand}"/>
+        </ui:CommandBar>
 
-        <ListView x:Name="SearchResultListView" Grid.Row="1" ItemsSource="{Binding SearchResult}" PreviewMouseLeftButtonDown="SearchResultListView_MouseLeftButtonDown">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="종목명" DisplayMemberBinding="{Binding Name}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        
-        <ListView x:Name="StocksListView" Grid.Row="2" ItemsSource="{Binding Stocks}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="종목명" Width="100" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="현재가" Width="50" DisplayMemberBinding="{Binding Price}"/>
-                    <GridViewColumn Header="전일대비" Width="50" DisplayMemberBinding="{Binding AmountOfChange}"/>
-                    <GridViewColumn Header="거래량" Width="50" DisplayMemberBinding="{Binding Volume}"/>
-                    <GridViewColumn Header="등락율" Width="50" DisplayMemberBinding="{Binding FluctuationRate}"/>
-                </GridView>
-            </ListView.View>
+        <ListView Grid.Row="1" ItemsSource="{Binding Stocks}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <control:StockTextBox/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
     </Grid>
 </Window>

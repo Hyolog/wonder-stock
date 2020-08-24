@@ -62,11 +62,21 @@ namespace WonderStock.ViewModels
 
         public ICommand SearchCommand { get; set; }
         public ICommand AddCommand { get; set; }
+        public ICommand SettingCommand { get; set; }
 
         public MainWindowViewModel()
         {
             SearchCommand = new RelayCommand(CanExecuteSearch, ExecuteSearch);
             AddCommand = new RelayCommand(CanExecuteAdd, ExecuteAdd);
+            SettingCommand = new RelayCommand(null, null);
+
+            var a = GetStock("095660");
+
+            Stocks.Add(a);
+
+            Stocks.Add(a);
+
+            Stocks.Add(a);
         }
 
         private StreamReader GetStreamReaderFromUrl(string url)
@@ -168,6 +178,7 @@ namespace WonderStock.ViewModels
                     Price = int.Parse(xmlNodes[0].Attributes["CurJuka"].Value.Replace(",", "")),
                     PreviousPrice = int.Parse(xmlNodes[0].Attributes["PrevJuka"].Value.Replace(",", "")),
                     Volume = int.Parse(xmlNodes[0].Attributes["Volume"].Value.Replace(",", "")),
+                    Fluctuation = int.Parse(xmlNodes[0].Attributes["DungRak"].Value)
                 };
             }
             catch (Exception exception)
