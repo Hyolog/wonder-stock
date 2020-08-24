@@ -22,8 +22,8 @@
         </Grid.RowDefinitions>
 
         <ui:CommandBar Grid.Row="0" HorizontalAlignment="Left" Background="Black">
-            <ui:AppBarButton Label="검색" Command="{Binding SearchCommand}"/>
-            <ui:AppBarButton Label="설정" Command="{Binding SettingCommand}"/>
+            <ui:AppBarButton Label="검색" Click="SearchButtonClick"/>
+            <ui:AppBarButton Label="설정"/>
         </ui:CommandBar>
 
         <ListView Grid.Row="1" ItemsSource="{Binding Stocks}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">

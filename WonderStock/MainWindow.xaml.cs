@@ -2,11 +2,13 @@
 using System.Windows.Controls;
 using WonderStock.Models;
 using WonderStock.ViewModels;
+using WonderStock.Views;
 
 namespace WonderStock
 {
     public partial class MainWindow : Window
     {
+        // TODO: NavigationWindow로 변경
         public MainWindow()
         {
             InitializeComponent();
@@ -19,6 +21,13 @@ namespace WonderStock
             var viewModel = DataContext as MainWindowViewModel;
 
             viewModel.Stocks.Add(stock);
+        }
+
+        private void SearchButtonClick(object sender, RoutedEventArgs e)
+        {
+            var searchView = new SearchView();
+
+            this.Content = searchView;
         }
     }
 }
