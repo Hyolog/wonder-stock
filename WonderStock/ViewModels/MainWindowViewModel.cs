@@ -178,6 +178,7 @@ namespace WonderStock.ViewModels
                     Price = int.Parse(xmlNodes[0].Attributes["CurJuka"].Value.Replace(",", "")),
                     PreviousPrice = int.Parse(xmlNodes[0].Attributes["PrevJuka"].Value.Replace(",", "")),
                     Volume = int.Parse(xmlNodes[0].Attributes["Volume"].Value.Replace(",", "")),
+                    Fluctuation = int.Parse(xmlNodes[0].Attributes["DungRak"].Value)
                 };
             }
             catch (Exception exception)

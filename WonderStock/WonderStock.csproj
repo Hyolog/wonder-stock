@@ -82,6 +82,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\FluctuationConverter.cs" />
+    <Compile Include="Converter\FluctutationColorConverter.cs" />
     <Compile Include="Models\StockItem.cs" />
     <Compile Include="StockManager.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

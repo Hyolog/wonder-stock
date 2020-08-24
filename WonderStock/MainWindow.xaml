@@ -9,7 +9,8 @@
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="400">
+        Title="WonderStock"
+        Width="300" MinWidth="150" Height="Auto" MinHeight="70">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -18,29 +19,24 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <ui:CommandBar Grid.Row="0">
+        <ui:CommandBar Grid.Row="0" HorizontalAlignment="Left" Background="Black">
             <ui:AppBarButton Label="검색" Command="{Binding SearchCommand}"/>
-            <ui:AppBarSeparator/>
             <ui:AppBarButton Label="설정" Command="{Binding SettingCommand}"/>
         </ui:CommandBar>
 
-        <ListView x:Name="SearchResultListView" Grid.Row="1" ItemsSource="{Binding SearchResult}" PreviewMouseLeftButtonDown="SearchResultListView_MouseLeftButtonDown">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="종목명" DisplayMemberBinding="{Binding Name}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-
-        <ListView Grid.Row="2" ItemsSource="{Binding Stocks}">
+        <ListView Grid.Row="1" ItemsSource="{Binding Stocks}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <control:StockTextBox/>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
     </Grid>
 </Window>
