@@ -9,7 +9,7 @@
       xmlns:ui="http://schemas.modernwpf.com/2019"
       ui:WindowHelper.UseModernWindowStyle="True"
       mc:Ignorable="d"
-      Width="300" MinWidth="150" Height="Auto" MinHeight="70"
+      Width="330" MinWidth="150" Height="Auto" MinHeight="70"
       SizeToContent="Height">
     <Window.DataContext>
         <vm:SearchViewModel/>
@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
         
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
-            <TextBox x:Name="SearchTextBox" Text="검색어 입력" Width="120"/>
+            <TextBox x:Name="SearchTextBox" Text="검색어 입력" Width="150" Height="30" KeyDown="SearchTextBoxKeyDown"/>
             <ui:CommandBar Grid.Row="0" HorizontalAlignment="Left" Background="#FF2D2D30">
                 <ui:AppBarButton Label="검색" Command="{Binding SearchCommand}" Click="SearchButtonClick" CommandParameter="{Binding ElementName=SearchTextBox, Path=Text}"/>
                 <ui:AppBarButton Label="정리" Command="{Binding DeleteCommand}"/>

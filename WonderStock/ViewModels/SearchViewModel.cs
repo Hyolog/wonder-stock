@@ -57,10 +57,6 @@ namespace WonderStock.ViewModels
         {
             SearchCommand = new RelayCommand(CanExecuteSearch, ExecuteSearch);
             DeleteCommand = new RelayCommand(CanExecuteDelete, ExecuteDelete);
-            // 이거 미리 로드하는게 맞는거야?
-            var htmlString = GetString(kindListedCompanyDownloadUrl);
-
-            codeAndNamePairs = GetDictionaryFromHtmlString(htmlString);
         }
 
         private bool CanExecuteSearch(object obj)
@@ -72,12 +68,12 @@ namespace WonderStock.ViewModels
         {
             string searchText = obj as string;
 
-            if (string.IsNullOrEmpty(searchText))
+            if (string.IsNullOrWhiteSpace(searchText))
             {
                 return;
             }
 
-            var codes = CodeAndNamePairs.Where(d => d.Value.Contains(searchText)).Select(d => d.Key);
+            var codes = CodeAndNamePairs.Where(d => d.Value.Contains(searchText))?.Select(d => d.Key);
 
             foreach (var code in codes)
             {
@@ -86,7 +82,12 @@ namespace WonderStock.ViewModels
                     continue;
                 }
 
-                Stocks.Add(GetStock(code));
+                var stock = GetStock(code);
+
+                if (stock != null)
+                {
+                    Stocks.Add(stock);
+                }
             }
         }
 
