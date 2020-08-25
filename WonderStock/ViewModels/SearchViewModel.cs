@@ -27,18 +27,7 @@ namespace WonderStock.ViewModels
             }
         }
 
-        private List<StockItem> selectedStocks = new List<StockItem>();
-        public List<StockItem> SelectedStocks
-        {
-            get { return selectedStocks; }
-            set
-            {
-                SetValueWithNotify(ref selectedStocks, value);
-            }
-        }
-
         private Dictionary<string, string> codeAndNamePairs;
-
         public Dictionary<string, string> CodeAndNamePairs
         {
             get
@@ -56,17 +45,22 @@ namespace WonderStock.ViewModels
         }
 
         private Logger logger = LogManager.GetCurrentClassLogger();
-
         // KRT Xml서비스 링크: https://kasp.krx.co.kr/contents/02/02010000/ASP02010000.jsp
         const string krtXmlServiceUrl = "http://asp1.krx.co.kr/servlet/krx.asp.XMLSise";
         // 상장기업목록 다운로드 링크
         const string kindListedCompanyDownloadUrl = "http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13";
 
         public ICommand SearchCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
 
         public SearchViewModel()
         {
             SearchCommand = new RelayCommand(CanExecuteSearch, ExecuteSearch);
+            DeleteCommand = new RelayCommand(CanExecuteDelete, ExecuteDelete);
+            // 이거 미리 로드하는게 맞는거야?
+            var htmlString = GetString(kindListedCompanyDownloadUrl);
+
+            codeAndNamePairs = GetDictionaryFromHtmlString(htmlString);
         }
 
         private bool CanExecuteSearch(object obj)
@@ -87,8 +81,23 @@ namespace WonderStock.ViewModels
 
             foreach (var code in codes)
             {
+                if (Stocks.Any(d => d.Code == code))
+                {
+                    continue;
+                }
+
                 Stocks.Add(GetStock(code));
             }
+        }
+
+        private bool CanExecuteDelete(object obj)
+        {
+            return true;
+        }
+
+        private void ExecuteDelete(object obj)
+        {
+            Stocks.Clear();
         }
 
         private string GetString(string url)

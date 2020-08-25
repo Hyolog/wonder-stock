@@ -10,7 +10,8 @@
         ui:WindowHelper.UseModernWindowStyle="True"
         mc:Ignorable="d"
         Title="WonderStock"
-        Width="300" MinWidth="150" Height="Auto" MinHeight="70" SizeToContent="Height">
+        Width="300" MinWidth="150" Height="Auto" MinHeight="70" 
+        SizeToContent="Height">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>

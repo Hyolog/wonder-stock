@@ -18,6 +18,11 @@ namespace WonderStock.Views
 
             foreach (var stock in StocksListView.SelectedItems.Cast<StockItem>())
             {
+                if (mainWindowViewModel.Stocks.Any(d => d.Code == stock.Code))
+                {
+                    continue;
+                }
+
                 mainWindowViewModel.Stocks.Add(stock);
             }
         }
