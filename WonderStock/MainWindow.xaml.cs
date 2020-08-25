@@ -27,7 +27,7 @@ namespace WonderStock
         {
             var searchView = new SearchView();
 
-            this.Content = searchView;
+            searchView.Show();
         }
     }
 }

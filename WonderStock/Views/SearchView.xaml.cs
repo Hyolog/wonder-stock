@@ -1,13 +1,11 @@
 ﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using WonderStock.Models;
 using WonderStock.ViewModels;
 
 namespace WonderStock.Views
 {
-    public partial class SearchView : Page
+    public partial class SearchView : Window
     {
         public SearchView()
         {
