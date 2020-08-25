@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ui:CommandBar Grid.Row="0" HorizontalAlignment="Left">
+        <ui:CommandBar Grid.Row="0" HorizontalAlignment="Left" Background="#FF2D2D30">
             <ui:AppBarButton Label="검색" Click="SearchButtonClick"/>
             <ui:AppBarButton Label="설정"/>
         </ui:CommandBar>

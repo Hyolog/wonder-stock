@@ -22,8 +22,8 @@
         </Grid.RowDefinitions>
         
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
-            <TextBox x:Name="SearchTextBox" Text="검색어 입력"/>
-            <ui:CommandBar Grid.Row="0" HorizontalAlignment="Left" Background="Black">
+            <TextBox x:Name="SearchTextBox" Text="검색어 입력" Width="120"/>
+            <ui:CommandBar Grid.Row="0" HorizontalAlignment="Left" Background="#FF2D2D30">
                 <ui:AppBarButton Label="검색" Command="{Binding SearchCommand}" Click="SearchButtonClick" CommandParameter="{Binding ElementName=SearchTextBox, Path=Text}"/>
                 <ui:AppBarButton Label="정리" Command="{Binding DeleteCommand}"/>
                 <ui:AppBarButton Label="추가" Click="AddButtonClick"/>
