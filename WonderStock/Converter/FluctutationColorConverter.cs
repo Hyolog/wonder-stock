@@ -14,9 +14,9 @@ namespace WonderStock.Converter
             switch (fluctuation)
             {
                 case 1:
-                case 2: return Brushes.Blue;
+                case 2: return Brushes.Red;
                 case 4:
-                case 5: return Brushes.Red;
+                case 5: return Brushes.Blue;
                 default: return Brushes.White;
             }
         }
