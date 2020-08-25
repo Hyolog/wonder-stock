@@ -27,18 +27,7 @@ namespace WonderStock.ViewModels
             }
         }
 
-        private List<StockItem> selectedStocks = new List<StockItem>();
-        public List<StockItem> SelectedStocks
-        {
-            get { return selectedStocks; }
-            set
-            {
-                SetValueWithNotify(ref selectedStocks, value);
-            }
-        }
-
         private Dictionary<string, string> codeAndNamePairs;
-
         public Dictionary<string, string> CodeAndNamePairs
         {
             get
@@ -56,17 +45,18 @@ namespace WonderStock.ViewModels
         }
 
         private Logger logger = LogManager.GetCurrentClassLogger();
-
         // KRT Xml서비스 링크: https://kasp.krx.co.kr/contents/02/02010000/ASP02010000.jsp
         const string krtXmlServiceUrl = "http://asp1.krx.co.kr/servlet/krx.asp.XMLSise";
         // 상장기업목록 다운로드 링크
         const string kindListedCompanyDownloadUrl = "http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13";
 
         public ICommand SearchCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
 
         public SearchViewModel()
         {
             SearchCommand = new RelayCommand(CanExecuteSearch, ExecuteSearch);
+            DeleteCommand = new RelayCommand(CanExecuteDelete, ExecuteDelete);
         }
 
         private bool CanExecuteSearch(object obj)
@@ -78,17 +68,37 @@ namespace WonderStock.ViewModels
         {
             string searchText = obj as string;
 
-            if (string.IsNullOrEmpty(searchText))
+            if (string.IsNullOrWhiteSpace(searchText))
             {
                 return;
             }
 
-            var codes = CodeAndNamePairs.Where(d => d.Value.Contains(searchText)).Select(d => d.Key);
+            var codes = CodeAndNamePairs.Where(d => d.Value.Contains(searchText))?.Select(d => d.Key);
 
             foreach (var code in codes)
             {
-                Stocks.Add(GetStock(code));
+                if (Stocks.Any(d => d.Code == code))
+                {
+                    continue;
+                }
+
+                var stock = GetStock(code);
+
+                if (stock != null)
+                {
+                    Stocks.Add(stock);
+                }
             }
+        }
+
+        private bool CanExecuteDelete(object obj)
+        {
+            return true;
+        }
+
+        private void ExecuteDelete(object obj)
+        {
+            Stocks.Clear();
         }
 
         private string GetString(string url)

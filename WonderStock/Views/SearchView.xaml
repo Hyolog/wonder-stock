@@ -1,4 +1,4 @@
-﻿<Page x:Class="WonderStock.Views.SearchView"
+﻿<Window x:Class="WonderStock.Views.SearchView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,11 +7,13 @@
       xmlns:vm="clr-namespace:WonderStock.ViewModels"
       xmlns:control="clr-namespace:WonderStock.UserControls"
       xmlns:ui="http://schemas.modernwpf.com/2019"
+      ui:WindowHelper.UseModernWindowStyle="True"
       mc:Ignorable="d"
-      Width="300" MinWidth="150" Height="Auto" MinHeight="70">
-    <Page.DataContext>
+      Width="330" MinWidth="150" Height="Auto" MinHeight="70"
+      SizeToContent="Height">
+    <Window.DataContext>
         <vm:SearchViewModel/>
-    </Page.DataContext>
+    </Window.DataContext>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -20,10 +22,11 @@
         </Grid.RowDefinitions>
         
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
-            <TextBox x:Name="SearchTextBox" Text="검색어 입력"/>
-            <ui:CommandBar Grid.Row="0" HorizontalAlignment="Left" Background="Black">
+            <TextBox x:Name="SearchTextBox" Text="검색어 입력" Width="150" Height="30" KeyDown="SearchTextBoxKeyDown"/>
+            <ui:CommandBar Grid.Row="0" HorizontalAlignment="Left" Background="#FF2D2D30">
                 <ui:AppBarButton Label="검색" Command="{Binding SearchCommand}" Click="SearchButtonClick" CommandParameter="{Binding ElementName=SearchTextBox, Path=Text}"/>
-                <ui:AppBarButton Label="추가" Command="{Binding AddCommand}" Click="AddButtonClick"/>
+                <ui:AppBarButton Label="정리" Command="{Binding DeleteCommand}"/>
+                <ui:AppBarButton Label="추가" Click="AddButtonClick"/>
             </ui:CommandBar>
         </StackPanel>
 
@@ -40,4 +43,4 @@
             </ListView.ItemContainerStyle>
         </ListView>
     </Grid>
-</Page>
+</Window>
