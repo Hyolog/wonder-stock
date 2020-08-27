@@ -24,10 +24,12 @@
 
         <ui:CommandBar Grid.Row="0" HorizontalAlignment="Left" Background="#FF2D2D30">
             <ui:AppBarButton Label="검색" Click="SearchButtonClick"/>
+            <!--dropdownbutton-->
             <ui:AppBarButton Label="설정"/>
+            <ui:AppBarButton Label="삭제" Click="DeleteButtonClick"/>
         </ui:CommandBar>
 
-        <ListView Grid.Row="1" ItemsSource="{Binding Stocks}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        <ListView x:Name="StockListView" Grid.Row="1" ItemsSource="{Binding Stocks}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <control:StockTextBox/>

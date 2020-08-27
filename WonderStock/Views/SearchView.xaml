@@ -30,7 +30,7 @@
             </ui:CommandBar>
         </StackPanel>
 
-        <ListView x:Name="StocksListView" Grid.Row="1" ItemsSource="{Binding Stocks}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" SelectionMode="Multiple">
+        <ListView x:Name="StockListView" Grid.Row="1" ItemsSource="{Binding Stocks}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.CanContentScroll="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <control:SimpleStockTextBox/>

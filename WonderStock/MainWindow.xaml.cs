@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System;
+using System.Linq;
+using System.Windows;
 using WonderStock.Models;
 using WonderStock.ViewModels;
 using WonderStock.Views;
@@ -12,15 +13,18 @@ namespace WonderStock
         public MainWindow()
         {
             InitializeComponent();
+
+            Loaded += MainWindowLoaded;
         }
 
-        private void SearchResultListView_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void MainWindowLoaded(object sender, RoutedEventArgs e)
         {
-            var stock = (StockItem)((sender as ListView).SelectedItem);
-
             var viewModel = DataContext as MainWindowViewModel;
 
-            viewModel.Stocks.Add(stock);
+            if (!viewModel.GetStocks())
+            {
+                MessageBox.Show("이전 정보를 불러오는데 실패 했습니다.");
+            }
         }
 
         private void SearchButtonClick(object sender, RoutedEventArgs e)
@@ -28,6 +32,17 @@ namespace WonderStock
             var searchView = new SearchView();
 
             searchView.Show();
+        }
+
+        private void DeleteButtonClick(object sender, RoutedEventArgs e)
+        {
+            var viewModel = DataContext as MainWindowViewModel;
+
+            foreach (var stock in StockListView.SelectedItems.Cast<Stock>().ToList())
+            {
+                viewModel.Stocks.Remove(stock);
+                App.Database.DeleteNoteAsync(stock).Wait();
+            }
         }
     }
 }

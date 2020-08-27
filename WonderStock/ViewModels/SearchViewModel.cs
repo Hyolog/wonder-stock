@@ -17,8 +17,8 @@ namespace WonderStock.ViewModels
 {
     public class SearchViewModel : NotifyPropertyChangedViewModel
     {
-        private ObservableCollection<StockItem> stocks = new ObservableCollection<StockItem>();
-        public ObservableCollection<StockItem> Stocks
+        private ObservableCollection<Stock> stocks = new ObservableCollection<Stock>();
+        public ObservableCollection<Stock> Stocks
         {
             get { return stocks; }
             set
@@ -132,7 +132,7 @@ namespace WonderStock.ViewModels
             return codeAndNameDic;
         }
 
-        private StockItem GetStock(string code)
+        private Stock GetStock(string code)
         {
             try
             {
@@ -150,7 +150,7 @@ namespace WonderStock.ViewModels
                 if (xmlNodes == null || xmlNodes.Count == 0)
                     return null;
 
-                return new StockItem()
+                return new Stock()
                 {
                     Name = xmlNodes[0].Attributes["JongName"].Value,
                     Code = code,
