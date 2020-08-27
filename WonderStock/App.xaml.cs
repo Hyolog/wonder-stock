@@ -1,12 +1,23 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using NLog;
+using WonderStock.Database;
 
 namespace WonderStock
 {
     public partial class App : Application
     {
+        static StockDatabase database;
+        public static StockDatabase Database
+        {
+            get
+            {
+                return database ?? (database = new StockDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Stocks.db")));
+            }
+        }
+
         private Logger logger = LogManager.GetCurrentClassLogger();
 
         protected override void OnStartup(StartupEventArgs e)
@@ -14,8 +25,6 @@ namespace WonderStock
             base.OnStartup(e);
 
             InitUnhandledException();
-
-            StockManager.Init();
         }
 
         private void InitUnhandledException()

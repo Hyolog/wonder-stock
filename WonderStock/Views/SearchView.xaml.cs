@@ -17,7 +17,7 @@ namespace WonderStock.Views
         {
             var mainWindowViewModel = Application.Current.MainWindow.DataContext as MainWindowViewModel;
 
-            foreach (var stock in StocksListView.SelectedItems.Cast<StockItem>())
+            foreach (var stock in StockListView.SelectedItems.Cast<Stock>())
             {
                 if (mainWindowViewModel.Stocks.Any(d => d.Code == stock.Code))
                 {
@@ -25,6 +25,7 @@ namespace WonderStock.Views
                 }
 
                 mainWindowViewModel.Stocks.Add(stock);
+                App.Database. InsertStocksAsync(stock);
             }
         }
 

@@ -1,8 +1,11 @@
-﻿namespace WonderStock.Models
+﻿using SQLite;
+
+namespace WonderStock.Models
 {
-    public class StockItem
+    public class Stock
     {
         public string Name { get; set; }
+        [PrimaryKey]
         public string Code { get; set; }
         public int Price { get; set; }
         public int PreviousPrice { get; set; }
