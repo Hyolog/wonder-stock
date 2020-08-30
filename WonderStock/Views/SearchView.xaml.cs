@@ -11,6 +11,15 @@ namespace WonderStock.Views
         public SearchView()
         {
             InitializeComponent();
+
+            Loaded += SearchViewLoaded;
+        }
+
+        private void SearchViewLoaded(object sender, RoutedEventArgs e)
+        {
+            var viewModel = DataContext as SearchViewModel;
+
+            viewModel.InitStockCodeAndNamePairs();
         }
 
         private void AddButtonClick(object sender, RoutedEventArgs e)
