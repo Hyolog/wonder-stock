@@ -27,22 +27,7 @@ namespace WonderStock.ViewModels
             }
         }
 
-        private Dictionary<string, string> codeAndNamePairs;
-        public Dictionary<string, string> CodeAndNamePairs
-        {
-            get
-            {
-                if (codeAndNamePairs == null)
-                {
-                    var htmlString = GetString(kindListedCompanyDownloadUrl);
-
-                    codeAndNamePairs = GetDictionaryFromHtmlString(htmlString);
-                }
-
-                return codeAndNamePairs;
-            }
-            set { codeAndNamePairs = value; }
-        }
+        public Dictionary<string, string> CodeAndNamePairs { get; set; }
 
         private Logger logger = LogManager.GetCurrentClassLogger();
         // KRT Xml서비스 링크: https://kasp.krx.co.kr/contents/02/02010000/ASP02010000.jsp
@@ -101,6 +86,22 @@ namespace WonderStock.ViewModels
             Stocks.Clear();
         }
 
+        public void InitStockCodeAndNamePairs()
+        {
+            try
+            {
+                IsBusy = true;
+
+                var htmlString = GetString(kindListedCompanyDownloadUrl);
+
+                CodeAndNamePairs = GetDictionaryFromHtmlString(htmlString);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
         private string GetString(string url)
         {
             using (var client = new HttpClient())
@@ -152,7 +153,7 @@ namespace WonderStock.ViewModels
 
                 return new Stock()
                 {
-                    Name = xmlNodes[0].Attributes["JongName"].Value,
+                    Name = CodeAndNamePairs.FirstOrDefault(d => d.Key.Equals(code)).Value,
                     Code = code,
                     Price = int.Parse(xmlNodes[0].Attributes["CurJuka"].Value.Replace(",", "")),
                     PreviousPrice = int.Parse(xmlNodes[0].Attributes["PrevJuka"].Value.Replace(",", "")),
